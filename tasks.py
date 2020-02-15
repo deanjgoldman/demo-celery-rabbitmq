@@ -1,7 +1,7 @@
 from celery import Celery
 from kombu import Queue
 
-app = Celery('tasks', broker='amqp://dean:dean123@localhost/dean_vhost')
+app = Celery('tasks', broker='amqp://me:me123@localhost/me_vhost')
 
 app.conf.task_default_queue = 'default'
 app.conf.task_queues = (
@@ -16,6 +16,6 @@ task_default_routing_key = 'task.default'
 def add(x, y):
     return x + y
     
-@app.task(queue="second")
+@app.task(queue="other")
 def fun(x, y):
-    return "OTHER QUEUE WOO {} {}".format(x, y)
+    return "You've made it to the other queue! x={} y={}".format(x, y)
